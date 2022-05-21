@@ -1,4 +1,4 @@
-# Toonification of real face images
+# Toonification of Real Face Images
 
 In order to toonify real face images, we use (modified) copies (no git submodules) of several repositories:
 
@@ -23,10 +23,10 @@ In oder to find face-keypoints, we need to begin with detectng faces.
 
 The [dlib](http://dlib.net/) library provides two functions that can be used for face detection:
 
-1. HOG + Linear SVM face detection (fast and less accurate)
-2. MMOD CNN face detector (slow and more accurate)
+1. **HOG + Linear SVM** face detection (fast and less accurate)
+2. **MMOD CNN** face detector (slow and more accurate)
 
-We detect 68 face landmarks using the pretrained landmarks detector model [shape_predictor_68_face_landmarks](http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2) from dlib.
+We detect 68 face landmarks using the **pretrained landmarks detector** model [shape_predictor_68_face_landmarks](http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2) from dlib.
 
 To get an idea what landmark detection means, run
 
