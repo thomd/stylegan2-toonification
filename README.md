@@ -4,6 +4,11 @@ In order to toonify real face images, we use (modified) copies (no git submodule
 
 * https://github.com/justinpinkney/stylegan2
 
+## Setup
+
+    conda env create -f environment.yml
+    conda activate toon
+
 ## Data Preparation
 
 We use a collection of about 1000 disney/pixar style cartoon face images which were collected using a web
