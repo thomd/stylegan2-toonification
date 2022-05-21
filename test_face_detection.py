@@ -13,12 +13,16 @@ def main(args):
     if args['detector'] == 'hog':
         face_detector = dlib.get_frontal_face_detector()
     else:
-        gdown.download(id='1oGNn74w9zU77uEVgzPrLxDG6X8aPzvba', quiet=True)
-        face_detector = dlib.cnn_face_detection_model_v1('mmod_human_face_detector.dat')
+        mmod_model = Path('mmod_human_face_detector.dat')
+        if not mmod_model.exists():
+            gdown.download(id='1oGNn74w9zU77uEVgzPrLxDG6X8aPzvba')
+        face_detector = dlib.cnn_face_detection_model_v1(str(mmod_model))
 
     # predict face landmarks
-    gdown.download(id='1HChdZjXEIqgqilqU2ar_mMOk-JflK5ah', quiet=True)
-    face_predictor = dlib.shape_predictor('shape_predictor_68_face_landmarks.dat')
+    landmarks_model = Path('shape_predictor_68_face_landmarks.dat')
+    if not landmarks_model.exists():
+        gdown.download(id='1HChdZjXEIqgqilqU2ar_mMOk-JflK5ah')
+    face_predictor = dlib.shape_predictor(str(landmarks_model))
 
 
     cap = cv2.VideoCapture(0)

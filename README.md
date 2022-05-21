@@ -14,14 +14,16 @@ In order to toonify real face images, we use (modified) copies (no git submodule
 We use a collection of about 1000 disney/pixar style cartoon face images which were collected using a web
 scraper and a custom web tool for image management and image cropping.
 
-### Face Alignment
+Store cartoon face images in `./cartoon-images`.
+
+### Cartoon Face Alignment
 
 As we are going to apply transfer-learning on the **FFHQ_512 model**, we have to **resize** all images to 512&times;512 and **align** all 
 cartoon images to have similar face-keypoint positions as the face images used to train FFHQ.
 
-In oder to find face-keypoints, we need to begin with detectng faces. 
+In oder to find face-keypoints, we need to begin with detecting cartoon faces.
 
-The [dlib](http://dlib.net/) library provides two functions that can be used for face detection:
+The [dlib](http://dlib.net/) library provides two functions that can be used for cartoon face detection:
 
 1. **HOG + Linear SVM** face detection (fast and less accurate)
 2. **MMOD CNN** face detector (slow and more accurate)
@@ -33,4 +35,6 @@ To get an idea what landmark detection means, run
     python test_face_detection.py --detector hog
     python test_face_detection.py --detector mmod
 
+For aligining the cartoon images, we leverage the `face_alignment.py` script from the `stylegan2` repository:
 
+    python align_image_data.py --images-path cartoon-images --detector hog
