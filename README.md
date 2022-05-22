@@ -35,6 +35,6 @@ To get an idea what landmark detection means, run
     python test_face_detection.py --detector hog
     python test_face_detection.py --detector mmod
 
-For aligining the cartoon images, we leverage the `face_alignment.py` script from the `stylegan2` repository:
+For aligining the cartoon images similar to FFHQ, we leverage the `face_alignment.py` script from the `stylegan2` repository:
 
     python align_image_data.py --images-path cartoon-images --detector hog
