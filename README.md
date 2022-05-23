@@ -1,8 +1,9 @@
 # Toonification of Real Face Images
 
-In order to toonify real face images, we use (modified) copies (no git submodules) of several repositories:
+In order to toonify real face images use (modified) copies (no git submodules) of several existing repositories:
 
-* https://github.com/justinpinkney/stylegan2
+* https://github.com/justinpinkney/stylegan2 (commit `dbf69a9`)
+* https://github.com/dvschultz/stylegan2-ada-pytorch (commit `9b6750b`)
 
 ## Setup
 
