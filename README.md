@@ -42,12 +42,12 @@ For aligining the cartoon images similar to FFHQ, we leverage the `face_alignmen
 
 The `align_image_data.py` script uses the MMOD face detection model by default, as it detects more cartoon faces. 
 
-In order to **visually verify** and **cleanup** (`remove` button deletes images from the target folder) properly aligned cartoon faces, open a Jupyter notebook and run
+In order to **visually verify** and **cleanup** properly aligned cartoon faces (the `remove` button deletes images from the target folder), open a Jupyter notebook and run
 
     from utils import print_images
     print_images(image_filter='aligned', size=512, landmarks=True)
 
-And to visually verify which cartoon face could not be aligned or which were deleted manually, run
+To visually verify which cartoon face could not be aligned or which were deleted manually, run
 
     from utils import print_images
     print_images(image_filter='missed')
