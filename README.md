@@ -37,4 +37,18 @@ To get an idea what landmark detection means, run
 
 For aligining the cartoon images similar to FFHQ, we leverage the `face_alignment.py` script from the `stylegan2` repository:
 
-    python align_image_data.py --images-path cartoon-images --detector hog
+    python align_image_data.py --help
+    python align_image_data.py
+
+The `align_image_data.py` script uses the MMOD face detection model by default, as it detects more cartoon faces. 
+
+In order to **visually verify** which cartoon face were properly aligned, open a Jupyter notebook and run
+
+    from utils import print_images
+    print_images(image_filter='aligned', size=512, landmarks=True)
+
+And to visually verify which cartoon face could not be detected, run
+
+    from utils import print_images
+    print_images(image_filter='missed')
+
