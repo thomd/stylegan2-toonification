@@ -22,12 +22,12 @@ def remove_button(file_path):
     return button
 
 
-def print_images(source_folder='cartoon-images', target_folder='cartoon-images-aligned', image_filter='aligned', landmarks=False, size=256):
+def print_images(source_folder='cartoon-images', target_folder='cartoon-images-aligned', image_filter='aligned', landmarks=False, size=512):
 
     image_types = ['.jpg', '.jpeg', '.png', '.bmp', '.tif', '.tiff']
     source_images = [str(p) for p in Path(source_folder).glob('**/*.*') if p.suffix in image_types]
 
-    for image_path in source_images:
+    for i, image_path in enumerate(source_images):
         image = dlib.load_rgb_image(image_path)
         if landmarks:
             landmarks_file = Path(target_folder + '/' + str(Path(image_path).stem) + '_00.pkl')
@@ -53,7 +53,7 @@ def print_images(source_folder='cartoon-images', target_folder='cartoon-images-a
         if image_filter == 'aligned' and aligned_image.exists():
             # print(f'\n{image_path}:')
             btn = remove_button(str(aligned_image))
-            display(widgets.HBox([ widgets.Label(value=image_path), btn], layout=widgets.Layout(margin='30px 0 0 0')))
+            display(widgets.HBox([ widgets.Label(value=f'\n{i}: {image_path}:'), btn], layout=widgets.Layout(margin='30px 0 0 0')))
             if landmarks:
                 p = img1.shape[0] - img2.shape[0]
                 img2 = np.pad(img2, pad_width=((0, p), (0, 0), (0, 0)), mode='constant', constant_values=255)
@@ -61,6 +61,6 @@ def print_images(source_folder='cartoon-images', target_folder='cartoon-images-a
             display(img)
 
         if image_filter == 'missed' and not aligned_image.exists():
-            print(f'\n{image_path}:')
+            print(f'\n{i}: {image_path}:')
             display(Image.fromarray(img1))
 
