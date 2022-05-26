@@ -55,12 +55,11 @@ To visually verify which cartoon face could not be aligned or which were deleted
 
 ## 2. Finetuning FFHQ Model
 
-The repository `stylegan2-ada-pytorch` allows us to finetune the trained FFHQ model. This model was created 
-using [StyleGAN2](https://github.com/NVlabs/stylegan2), which is an improved **generative adversarial network** (GAN) 
-published by Nvidia 2020. 
+The repository `stylegan2-ada-pytorch` allows us to finetune the pre-trained **FFHQ model**.
 
-StyleGAN2-ADA is a further improved GAN which leverages **adaptive discriminator augmentation** (ADA) to
-prevent overfitting due to a small dataset.
+This model was created using [StyleGAN2](https://github.com/NVlabs/stylegan2), which is an improved **generative adversarial network** (GAN) published by Nvidia 2020.
+
+StyleGAN2-ADA is a further improved GAN which leverages **adaptive discriminator augmentation** (ADA) to prevent overfitting due to a small dataset.
 
 StyleGAN2 requires a GPU which is for example available using [Google Colab](https://colab.research.google.com):
 
