@@ -39,7 +39,7 @@ To get an idea what landmark detection means, run
 For aligining the cartoon images similar to FFHQ, we leverage the `face_alignment.py` script from the `stylegan2` repository:
 
     python align_image_data.py --help
-    python align_image_data.py
+    python align_image_data.py --images-source /path/to/images --images-target dataset
 
 The `align_image_data.py` script uses the MMOD face detection model by default, as it detects more cartoon faces. 
 
@@ -55,15 +55,35 @@ To visually verify which cartoon face could not be aligned or which were deleted
 
 ## 2. Finetuning FFHQ Model
 
-The repository `stylegan2-ada-pytorch` allows us to finetune the pre-trained **FFHQ model**.
+The repository `stylegan2-ada-pytorch` allows us to finetune the pre-trained **FFHQ model** using
+transfer-learning.
 
 This model was created using [StyleGAN2](https://github.com/NVlabs/stylegan2), which is an improved **generative adversarial network** (GAN) published by Nvidia 2020.
 
 StyleGAN2-ADA is a further improved GAN which leverages **adaptive discriminator augmentation** (ADA) to prevent overfitting due to a small dataset.
 
-StyleGAN2 requires a GPU which is for example available using [Google Colab](https://colab.research.google.com):
+StyleGAN2-ADA requires a GPU which is available using [Google Colab](https://colab.research.google.com):
+
+### Setup on Google Colab
+
+first, zip the images dataset and upload to a Google Drive folder:
+
+    gdrive mkdir toonification
+    gdrive upload -p <folderId> dataset.zip
+
+Good practice is to store all training results on Google Drive. Mount Google Drive and create a project folder with
+
+    from google.colab import drive
+    drive.mount('/content/drive')
+    project = '/content/drive/MyDrive/toonification'
+    %mkdir -p {project}
+
+Then install dependencies with
 
     !git clone https://github.com/thomd/stylegan2-toonification.git
     !pip install --quiet opensimplex ninja
+    !nvidi-smi
     %cd stylegan2-toonification/stylegan2-ada-pytorch/
+
+
 
