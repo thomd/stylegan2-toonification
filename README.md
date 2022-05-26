@@ -33,13 +33,13 @@ We detect 68 face landmarks using the **pretrained landmarks detector** model [s
 
 To get an idea what landmark detection means, run
 
-    python test_face_detection.py --detector hog
-    python test_face_detection.py --detector mmod
+    > python test_face_detection.py --detector hog
+    > python test_face_detection.py --detector mmod
 
 For aligining the cartoon images similar to FFHQ, we leverage the `face_alignment.py` script from the `stylegan2` repository:
 
-    python align_image_data.py --help
-    python align_image_data.py --images-source /path/to/images --images-target dataset
+    > python align_image_data.py --help
+    > python align_image_data.py --images-source /path/to/images --images-target dataset
 
 The `align_image_data.py` script uses the MMOD face detection model by default, as it detects more cartoon faces. 
 
@@ -68,8 +68,8 @@ StyleGAN2-ADA requires a GPU which is available using [Google Colab](https://col
 
 first, zip the images dataset and upload to a Google Drive folder:
 
-    gdrive mkdir toonification
-    gdrive upload -p <folderId> dataset.zip
+    > gdrive mkdir toonification
+    > gdrive upload -p <folderId> dataset.zip
 
 Good practice is to store all training results on Google Drive. Mount Google Drive and create a project folder with
 
