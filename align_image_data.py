@@ -57,7 +57,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Pre-process image data', formatter_class=CustomFormatter)
     parser.add_argument('--images-source', default='cartoon-images', type=Path, metavar='PATH', help='path to cartoon images source')
     parser.add_argument('--images-target', default='cartoon-images-aligned', type=Path, metavar='PATH', help='path to aligned cartoon images')
-    parser.add_argument('--output-size', default=512, type=int, metavar='SIZE', help='target image size')
+    parser.add_argument('--output-size', default=1024, type=int, metavar='SIZE', help='target image size')
     parser.add_argument('--model', default='mmod', choices=['hog', 'mmod'], help='face detector model')
     parser.add_argument('--metadata', action='store_true', default=True, help='store metadata (faces, landmarks)')
     args = vars(parser.parse_args())

@@ -10,7 +10,7 @@ In order to toonify real face images we leverage (modified) copies (no git submo
     conda env create -f environment.yml
     conda activate toon
 
-## Data Preparation
+## 1. Data Preparation
 
 We use a collection of about 1000 disney/pixar style cartoon face images which were collected using a web
 scraper and a custom web tool for image management and image cropping.
@@ -19,8 +19,8 @@ Store cartoon face images in `./cartoon-images`.
 
 ### Cartoon Face Alignment
 
-As we are going to apply transfer-learning on the **FFHQ_512 model**, we have to **resize** all images to 512&times;512 and **align** all 
-cartoon images to have similar face-keypoint positions as the face images used to train FFHQ.
+As we are going to apply transfer-learning on the **FFHQ_1024 model**, we have to **resize** all images to 1024&times;1024 and **align** all 
+cartoon images to have similar face-keypoint positions as the face images from the [FFHQ dataset](https://github.com/NVlabs/ffhq-dataset) used to train the FFHQ model.
 
 In oder to find face-keypoints, we need to begin with detecting cartoon faces.
 
@@ -52,4 +52,19 @@ To visually verify which cartoon face could not be aligned or which were deleted
 
     from utils import print_images
     print_images(image_filter='missed')
+
+## 2. Finetuning FFHQ Model
+
+The repository `stylegan2-ada-pytorch` allows us to finetune the trained FFHQ model. This model was created 
+using [StyleGAN2](https://github.com/NVlabs/stylegan2), which is an improved **generative adversarial network** (GAN) 
+published by Nvidia 2020. 
+
+StyleGAN2-ADA is a further improved GAN which leverages **adaptive discriminator augmentation** (ADA) to
+prevent overfitting due to a small dataset.
+
+StyleGAN2 requires a GPU which is for example available using [Google Colab](https://colab.research.google.com):
+
+    !git clone https://github.com/thomd/stylegan2-toonification.git
+    !pip install --quiet opensimplex ninja
+    %cd stylegan2-toonification/stylegan2-ada-pytorch/
 

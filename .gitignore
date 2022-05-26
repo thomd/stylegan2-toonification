@@ -1,5 +1,6 @@
 cartoon-images/
 cartoon-images-aligned/
+dataset/
 *.dat
 *.zip
 Untitled.ipynb
