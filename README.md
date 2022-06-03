@@ -66,24 +66,65 @@ StyleGAN2-ADA requires a GPU which is available using [Google Colab](https://col
 
 ### Setup on Google Colab
 
-first, zip the images dataset and upload to a Google Drive folder:
+Good practice is to store all datasets and training results on **Google Drive**.
 
-    > gdrive mkdir toonification
-    > gdrive upload -p <folderId> dataset.zip
-
-Good practice is to store all training results on Google Drive. Mount Google Drive and create a project folder with
+First, mount Google Drive and create a project folder with
 
     from google.colab import drive
     drive.mount('/content/drive')
     project = '/content/drive/MyDrive/toonification'
     %mkdir -p {project}
 
-Then install dependencies with
+then, zip the images dataset and upload to a Google Drive folder:
+
+    > gdrive list -q "name contains 'toonification' and mimeType contains 'folder'"
+    > gdrive upload -p <folderId> dataset.zip
+
+then install dependencies with
 
     !git clone https://github.com/thomd/stylegan2-toonification.git
-    !pip install --quiet opensimplex ninja
+    !pip install --quiet ninja opensimplex torch==1.7.1 torchvision==0.8.2
     !nvidi-smi
     %cd stylegan2-toonification/stylegan2-ada-pytorch/
 
+Start **Tensorboard** for tracking metrics (you might Firefox deactivate "Enhanced Tracking Protection" in Firefox):
+
+    %load_ext tensorboard
+    %tensorboard --logdir={project}/results/
+
+### Resume Training of Pre-Trained FFHQ Model
+
+Google Colab notebooks have an idle timeout of 90 minutes and absolute timeout of 12 hours. This means, if user does not interact with his Google Colab notebook for more than 90 minutes, its instance is automatically terminated. Also, maximum lifetime of a Colab instance is 12 hours.
+
+Therefore it is good practice to save a snapshop very often (setting `snap = 1`) and resume with the last snapshot after 12 hours.
+
+Start fine-tuning the FFHQ model:
+
+    resume = 'ffhq1024'
+    nkimg = 0
+    aug = 'ada'
+    augpipe = 'bgcf'
+    freezed = 0
+    gamma = 10
+    target = 0.6
+
+    !python train.py \
+            --cfg='11gb-gpu' \
+            --outdir={project}/results \
+            --data=/content/drive/MyDrive/toonification/dataset.zip \
+            --snap=1 \
+            --resume={resume} \
+            --freezed={freezed} \
+            --aug={aug} \
+            --augpipe={augpipe} \
+            --gamma={gamma} \
+            --target={target} \
+            --mirror=True \
+            --nkimg={nkimg}
+
+When resuming with a sanpshot, set `resume` and `nkimg` accordingly and start the trainign script again:
+
+    resume = {project}/results/.../network-snapshot-000xxx.pkl
+    nkimg = xxx
 
 
