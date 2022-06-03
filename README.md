@@ -130,6 +130,35 @@ When resuming with a sanpshot, set `resume` and `nkimg` accordingly and start th
 Stop trainign as soon as the losses in Tensorboard reach a plateau. Then do variations of `freezed`, `gamma`, `aug`,
 `augpip` and `target` and keep results for later tests with real face images.
 
+### Testing the Model
+
+In order to determine the best hyper-parameter and sufficient training time, use the models to generate new single images using a *latent vector* of a random normal distribution.
+
+The hpyer parameter are part of the `results` folder name which allows to select the created models:
+
+    seeds = '42-47'
+    truncation = 0.5
+    model = f'results/{num}-dataset-mirror-11gb-gpu-gamma{gamma}-ada-target{target}-{augpipe}-resume{resume}-freezed{freezed}/network-snapshot-{snapshot}.pkl'
+
+    %mkdir -p {project}/out
+
+    !python generate.py \
+            --outdir={project}/out/ \
+            --trunc={truncation} \
+            --seeds={seeds} \
+            --network={project}/{model} > /dev/null
+
+
+    from PIL import Image
+    import os
+    import numpy as np
+
+    imgs = []
+    for img in sorted(os.listdir(f'{project}/out/')):
+      imgs.append(np.array(Image.open(f'{project}/out/' + img).resize((256,256))))
+
+    print(f'\nFreezeD: {freezed}, Gamma: {gamma}, AugPipe: {augpipe}')
+    display(Image.fromarray(np.concatenate(imgs, axis=1)))
 
 
 
