@@ -111,7 +111,7 @@ Start fine-tuning the FFHQ model:
     !python train.py \
             --cfg='11gb-gpu' \
             --outdir={project}/results \
-            --data=/content/drive/MyDrive/toonification/dataset.zip \
+            --data={project}/dataset.zip \
             --snap=1 \
             --resume={resume} \
             --freezed={freezed} \
