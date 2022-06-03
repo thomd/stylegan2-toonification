@@ -127,4 +127,10 @@ When resuming with a sanpshot, set `resume` and `nkimg` accordingly and start th
     resume = {project}/results/.../network-snapshot-000xxx.pkl
     nkimg = xxx
 
+Stop trainign as soon as the losses in Tensorboard reach a plateau. Then do variations of `freezed`, `gamma`, `aug`,
+`augpip` and `target` and keep results for later tests with real face images.
+
+
+
+
 
