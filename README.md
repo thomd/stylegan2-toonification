@@ -220,7 +220,7 @@ The generated latent vector `projected_w.npz` is then used as input for our blen
 
 ## 4. Image-to-Image Translation GAN
 
-As projection of real faces into latent space takes very long (a magnitude of minutes for a single image), we train an image-to-image translation GAN. Image-to-image translation is the task of taking images from one domain and transforming them so they have the style (or characteristics) of images from another domain.
+As projection of real faces into latent space takes **very long** (a magnitude of minutes for a single image), we train an **image-to-image translation GAN**. Image-to-image translation is the task of taking images from one domain and transforming them so they have the style (or characteristics) of images from another domain.
 
 ### Generation of an Image-Pair Dataset
 
