@@ -59,7 +59,7 @@ To visually verify which cartoon face could not be aligned or which were deleted
     from utils import print_images
     print_images(source_folder='/path/to/images', target_folder='dataset', image_filter='missed')
 
-## 2. Finetuning FFHQ Model
+## 2. Finetuning and Blending the FFHQ Model
 
 The repository `stylegan2-ada-pytorch` allows us to finetune the pre-trained **FFHQ model** using
 transfer-learning.
@@ -154,8 +154,7 @@ The `truncation` parameter truncates the probability distribution of the latent 
             --outdir={project}/out/ \
             --trunc={truncation} \
             --seeds={seeds} \
-            --network={project}/{model} > /dev/null
-
+            --network={project}/{model}
 
     from PIL import Image
     import os
@@ -187,6 +186,37 @@ We got best results when using the *lower layers* from the *cartoon-faces* model
             --higher_res_pkl {ffhq_model} \
             --output_path {project}/blending/cartoon_ffhq_blended_128.pkl
 
+## 3. Projection of Input Images into the Latent Space
+
+In order to toonify given input images from real faces, we need to project them to it's latent vector representation using a variational autoencoder (VAE).
+
+GANs learn to generate outputs from random latent vectors that mimic the appearance of your input data, but not necessarily the exact samples of your input data. VAEs learn to encode your input samples into latent vectors, and then also learn to decode latent vectors back to it’s (mostly) original form.
+
+This works best, if the input images are cropped and aligned similar to the cartoon faces dataset:
+
+    %cd /content/stylegan2-toonification/
+    !python align_image_data.py --images-source input --images-target input_aligned
+
+Besides the standard projection techinque provided in Nvidias *styelegan2* repository, there is an additional projector techniques by [Peter Baylies](https://github.com/pbaylies/stylegan-encoder) provided in the *stylegan2-ada-pytorch* repository. We use the latter, as it creates better results:
+
+    %cd /content/stylegan2-toonification/stylegan2-ada-pytorch/
+    !python pbaylies_projector.py \
+            --outdir=/content/input \
+            --target-image=/content/input/raw_00.png \
+            --num-steps=500 \
+            --save-video=False \
+            --use-clip=False \
+            --use-center=False \
+            --network={ffhq_model}
+
+The generated latent vector `projected_w.npz` is then used as input for our blended cartoon model `cartoon_ffhq_blended_128.pkl`:
+
+    %mkdir -p /content/output
+    !python generate.py \
+            --outdir=/content/output \
+            --projected-w=/content/input/projected_w.npz \
+            --trunc=0.5 \
+            --network={project}/blending/cartoon_ffhq_blended_128.pkl
 
 
 
