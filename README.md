@@ -138,7 +138,7 @@ Stop trainign as soon as the losses in Tensorboard reach a plateau. Then do vari
 
 ### Testing the Model
 
-In order to determine the best hyper-parameter and sufficient training time, use the model snapshots to generate new single images of cartoon faces using a *latent vector* of a random normal distribution.
+In order to determine the best hyper-parameter and sufficient training time, use the model snapshots to generate new single images of cartoon faces using a **latent vector** of a random normal distribution.
 
 The hpyer parameter are part of the `results` folder name which allows to select the parametrized model snapshots.
 
@@ -169,9 +169,9 @@ The `truncation` parameter truncates the probability distribution of the latent 
 
 ### Model Blending
 
-You can take two completely different models and combine them by splitting them at a specific resolution and combining the *lower layers* (pose, eyes, ...) of one model and the *higher layers* (texture) of another model. Model blending (aka Layer Swapping) tends to work best when one of the models is transfer learned from the other.
+You can take two completely different models and combine them by splitting them at a specific resolution and combining the **lower layers** (pose, eyes, ...) of one model and the **higher layers** (texture) of another model. Model blending (aka Layer Swapping) tends to work best when one of the models is transfer learned from the other.
 
-We got best results when using the *lower layers* from the *cartoon-faces* model, the *higher layers* from the FFHQ model and a resolution to split model weights of `128`.
+We got best results when using the **lower layers** from the **cartoon-faces** model, the **higher layers** from the **FFHQ model** and a resolution to split model weights of `128`.
 
     %cd /content
     ffhq_model = 'ffhq-res1024-mirror-stylegan2-noaug.pkl'
@@ -197,7 +197,7 @@ This works best, if the input images are cropped and aligned similar to the cart
     %cd /content/stylegan2-toonification/
     !python align_image_data.py --images-source input --images-target input_aligned
 
-Besides the standard projection techinque provided in Nvidias *styelegan2* repository, there is an additional projector techniques by [Peter Baylies](https://github.com/pbaylies/stylegan-encoder) provided in the *stylegan2-ada-pytorch* repository. We use the latter, as it creates better results:
+Besides the standard projection techinque provided in Nvidias **styelegan2** repository, there is an additional projection technique by [Peter Baylies](https://github.com/pbaylies/stylegan-encoder) provided in the **stylegan2-ada-pytorch** repository. We use the latter, as it creates better results:
 
     %cd /content/stylegan2-toonification/stylegan2-ada-pytorch/
     !python pbaylies_projector.py \
