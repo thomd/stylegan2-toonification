@@ -134,7 +134,9 @@ Stop trainign as soon as the losses in Tensorboard reach a plateau. Then do vari
 
 In order to determine the best hyper-parameter and sufficient training time, use the models to generate new single images using a *latent vector* of a random normal distribution.
 
-The hpyer parameter are part of the `results` folder name which allows to select the created models:
+The hpyer parameter are part of the `results` folder name which allows to select the parametrized model snapshots.
+
+The `truncation` parameter truncates the probability distribution of the latent space vector. It kind of affects diversity, the smaller the number the more realistic your images are. Values are typically etween `0.5` and `1.0`.
 
     seeds = '42-47'
     truncation = 0.5
@@ -160,6 +162,6 @@ The hpyer parameter are part of the `results` folder name which allows to select
     print(f'\nFreezeD: {freezed}, Gamma: {gamma}, AugPipe: {augpipe}')
     display(Image.fromarray(np.concatenate(imgs, axis=1)))
 
-
+### 
 
 
