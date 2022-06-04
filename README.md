@@ -178,7 +178,7 @@ We got best results when using the *lower layers* from the *cartoon-faces* model
     ffhq_model = 'ffhq-res1024-mirror-stylegan2-noaug.pkl'
 
     %mkdir -p {project}/blending
-    cartoon_model ='00002-dataset-mirror-11gb-gpu-gamma10-ada-target0.6-bgcf-resumeffhq1024-freezed0/network-snapshot-000152.pkl'
+    cartoon_model = f'results/{num}-dataset-mirror-11gb-gpu-gamma{gamma}-ada-target{target}-{augpipe}-resume{resume}-freezed{freezed}/network-snapshot-{snapshot}.pkl'
 
     %cd stylegan2-toonification/stylegan2-ada-pytorch/
     !python blend_models.py \
