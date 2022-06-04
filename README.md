@@ -218,5 +218,20 @@ The generated latent vector `projected_w.npz` is then used as input for our blen
             --trunc=0.5 \
             --network={project}/blending/cartoon_ffhq_blended_128.pkl
 
+## 4. Image-to-Image Translation GAN
+
+As projection of real faces into latent space takes very long (a magnitude of minutes for a single image), we train an image-to-image translation GAN. Image-to-image translation is the task of taking images from one domain and transforming them so they have the style (or characteristics) of images from another domain.
+
+### Generation of an Image-Pair Dataset
+
+In order to train an Image-to-Image Translation GAN, we need a large dataset of image pairs of real-faces and its related toonified-faces. 
+
+We use the projection script `stylegan2-ada-pytorch/pbaylies_projector.py` and our custom `cartoon_ffhq_blended_128.pkl` model to create cartoon-faces from a given real-faces
+dataset of 3000 images minimum. If no dataset is available, use the **StyleGAN2 FFHQ model** to generate random real faces.
+
+
+using the StyleGAN-Encoder model for image-to-image translation → generate real faces using the StyelGAN2 FFHQ model → toonify each image → train custom StyleGAN-Encoder model for image-to-image translation → convert model into an interchangeable open ONNX format (1.1 GB) → deploy to Azure ML → implement services.
+
+
 
 
