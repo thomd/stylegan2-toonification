@@ -1,9 +1,15 @@
 # Toonification of Real Face Images
 
-In order to toonify real face images we leverage (modified) copies (no git submodules) of several existing repositories:
+In order to toonify real face images we leverage (modified) copies (no git submodules) of several existing repositories
 
 * https://github.com/justinpinkney/stylegan2 (commit `dbf69a9`) from Justin Pinkney
 * https://github.com/dvschultz/stylegan2-ada-pytorch (commit `9b6750b`) from Derrick Schultz
+
+and leverage several pre-trained models
+
+* https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl
+* https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/transfer-learning-source-nets/ffhq-res1024-mirror-stylegan2-noaug.pkl
+* https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/metrics/vgg16.pt
 
 ## Setup
 
@@ -132,7 +138,7 @@ Stop trainign as soon as the losses in Tensorboard reach a plateau. Then do vari
 
 ### Testing the Model
 
-In order to determine the best hyper-parameter and sufficient training time, use the models to generate new single images using a *latent vector* of a random normal distribution.
+In order to determine the best hyper-parameter and sufficient training time, use the model snapshots to generate new single images of cartoon faces using a *latent vector* of a random normal distribution.
 
 The hpyer parameter are part of the `results` folder name which allows to select the parametrized model snapshots.
 
@@ -155,13 +161,32 @@ The `truncation` parameter truncates the probability distribution of the latent 
     import os
     import numpy as np
 
-    imgs = []
-    for img in sorted(os.listdir(f'{project}/out/')):
-      imgs.append(np.array(Image.open(f'{project}/out/' + img).resize((256,256))))
+    images = []
+    for image in sorted(os.listdir(f'{project}/out/')):
+        images.append(np.array(Image.open(f'{project}/out/' + image).resize((256, 256))))
 
     print(f'\nFreezeD: {freezed}, Gamma: {gamma}, AugPipe: {augpipe}')
-    display(Image.fromarray(np.concatenate(imgs, axis=1)))
+    display(Image.fromarray(np.concatenate(images, axis=1)))
 
-### 
+### Model Blending
+
+You can take two completely different models and combine them by splitting them at a specific resolution and combining the *lower layers* (pose, eyes, ...) of one model and the *higher layers* (texture) of another model. Model blending (aka Layer Swapping) tends to work best when one of the models is transfer learned from the other.
+
+We got best results when using the *lower layers* from the *cartoon-faces* model, the *higher layers* from the FFHQ model and a resolution to split model weights of `128`.
+
+    %cd /content
+    ffhq_model = 'ffhq-res1024-mirror-stylegan2-noaug.pkl'
+
+    %mkdir -p {project}/blending
+    cartoon_model ='00002-dataset-mirror-11gb-gpu-gamma10-ada-target0.6-bgcf-resumeffhq1024-freezed0/network-snapshot-000152.pkl'
+
+    %cd stylegan2-toonification/stylegan2-ada-pytorch/
+    !python blend_models.py \
+            --lower_res_pkl {project}/results/{cartoon_model} \
+            --split_res 128 \
+            --higher_res_pkl {ffhq_model} \
+            --output_path {project}/blending/cartoon_ffhq_blended_128.pkl
+
+
 
 
