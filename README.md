@@ -1,16 +1,18 @@
 # Toonification of Real Face Images
 
-In order to toonify real face images we leverage (modified) copies (no git submodules) of several existing repositories
+In order to toonify real face images we leverage copies (no git submodules) of several **existing repositories**:
 
 * https://github.com/justinpinkney/stylegan2 (commit `dbf69a9`) by Justin Pinkney
 * https://github.com/dvschultz/stylegan2-ada-pytorch (commit `9b6750b`) by Derrick Schultz
 * https://github.com/eladrich/pixel2style2pixel (commit `334f45e`) by Elad Richardson
 
-and leverage several pre-trained models
+and leverage several **pre-trained models**:
 
-* https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl
-* https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/transfer-learning-source-nets/ffhq-res1024-mirror-stylegan2-noaug.pkl
-* https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/metrics/vgg16.pt
+* [StyleGAN2 FFQH 1024](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl)
+* [StyleGAN2 FFHQ 1024 config F](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/transfer-learning-source-nets/ffhq-res1024-mirror-stylegan2-noaug.pkl)
+* [VGG16 Feature Extractor](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/metrics/vgg16.pt)
+* [MMOD Human Face Detector](http://dlib.net/files/mmod_human_face_detector.dat.bz2)
+* [Shape Predictor 68 Face Landmarks](http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2)
 
 ## Table of Contents
 
