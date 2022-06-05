@@ -14,15 +14,18 @@ and leverage several pre-trained models
 
 ## Table of Contents
 
-  * [Setup Environment](#setup-environment)
   * [1. Data Preparation](#1-data-preparation)
+    + [Setup Environment](#setup-environment)
     + [Cartoon Face Alignment](#cartoon-face-alignment)
-
-
-## Setup Environment
-
-    conda env create -f environment.yml
-    conda activate toon
+  * [2. Finetuning and Blending the FFHQ Model](#2-finetuning-and-blending-the-ffhq-model)
+    + [Setup on Google Colab](#setup-on-google-colab)
+    + [Resume Training of Pre-Trained FFHQ Model](#resume-training-of-pre-trained-ffhq-model)
+    + [Testing the Model](#testing-the-model)
+    + [Model Blending](#model-blending)
+  * [3. Projection of Input Images into the Latent Space](#3-projection-of-input-images-into-the-latent-space)
+  * [4. Image-to-Image Translation GAN](#4-image-to-image-translation-gan)
+    + [Generation of an Image-Pair Dataset](#generation-of-an-image-pair-dataset)
+    + [Training pSp](#training-psp)
 
 ## 1. Data Preparation
 
@@ -30,6 +33,11 @@ We use a collection of about 1000 disney/pixar style cartoon face images which w
 scraper and a custom web tool for image management and image cropping.
 
 Store cartoon face images in `./cartoon-images`.
+
+### Setup Environment
+
+    conda env create -f environment.yml
+    conda activate toon
 
 ### Cartoon Face Alignment
 
@@ -194,9 +202,9 @@ We got best results when using the **lower layers** from the **cartoon-faces** m
             --higher_res_pkl {ffhq_model} \
             --output_path {project}/blending/cartoon_ffhq_blended_128.pkl
 
-## 3. Projection of Input Images into the Latent Space (aka StyleGAN Inversion)
+## 3. Projection of Input Images into the Latent Space
 
-In order to toonify given input images from real faces, we need to project them to it's latent vector representation using a variational autoencoder (VAE).
+In order to toonify given input images from real faces, we need to project them to it's **latent vector** representation using a **variational autoencoder** (VAE). This process is also known as StyleGAN Inversion.
 
 GANs learn to generate outputs from random latent vectors that mimic the appearance of your input data, but not necessarily the exact samples of your input data. VAEs learn to encode your input samples into latent vectors, and then also learn to decode latent vectors back to it’s (mostly) original form.
 
@@ -237,9 +245,24 @@ In order to train an Image-to-Image Translation GAN, we need a large dataset of 
 We use the projection script `stylegan2-ada-pytorch/pbaylies_projector.py` and our custom `cartoon_ffhq_blended_128.pkl` model to create cartoon-faces from a given real-faces
 dataset of 3000 images minimum. If no dataset is available, use the **StyleGAN2 FFHQ model** to generate random real faces.
 
+Prepare the image pairs using the following file structure:
 
-using the StyleGAN-Encoder model for image-to-image translation → generate real faces using the StyelGAN2 FFHQ model → toonify each image → train custom StyleGAN-Encoder model for image-to-image translation → convert model into an interchangeable open ONNX format (1.1 GB) → deploy to Azure ML → implement services.
+    dataset
+    ├── test
+    │   ├── reals
+    │   │   ├── 0001.png
+    │   │   └── 0002.png
+    │   └── toons
+    │       ├── 0001.png
+    │       └── 0002.png
+    └── train
+        ├── reals
+        │   ├── 0003.png
+        │   └── 0004.png
+        └── toons
+            ├── 0003.png
+            └── 0004.png
 
-
+### Training pSp
 
 
