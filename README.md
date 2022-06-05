@@ -245,7 +245,7 @@ As projection of real faces into latent space takes **very long** (a magnitude o
 In order to train an Image-to-Image Translation GAN, we need a large dataset of image pairs of real-faces and its related toonified-faces. 
 
 We use the projection script `stylegan2-ada-pytorch/pbaylies_projector.py` and our custom `cartoon_ffhq_blended_128.pkl` model to create cartoon-faces from a given real-faces
-dataset of 3000 images minimum. If no dataset is available, use the **StyleGAN2 FFHQ model** to generate random real faces.
+dataset of **3000 images minimum**. If no dataset is available, use the **StyleGAN2 FFHQ model** to generate random "real" faces.
 
 Prepare the image pairs using the following file structure:
 
