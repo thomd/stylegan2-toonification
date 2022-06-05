@@ -271,6 +271,7 @@ Then upload as zip file to Google Colab and unzip into `/content`:
     > gdrive upload -p <folderId> dataset_psp.zip
 
     %cd /content
+    !mv {project}/dataset_psp.zip .
     !unzip dataset_psp.zip
 
 In case of a different location or different folder names, update paths in `./pixel2style2pixel/configs/paths_config.py`.
