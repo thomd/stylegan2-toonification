@@ -38,4 +38,11 @@ DATASETS = {
 		'test_source_root': dataset_paths['celeba_test'],
 		'test_target_root': dataset_paths['celeba_test'],
 	},
+	'toonify': {
+		'transforms': transforms_config.ToonifyTransforms,
+		'train_source_root': dataset_paths['real_train'],
+		'train_target_root': dataset_paths['toon_train'],
+		'test_source_root': dataset_paths['real_test'],
+		'test_target_root': dataset_paths['toon_test'],
+	},
 }
