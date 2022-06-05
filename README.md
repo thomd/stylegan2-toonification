@@ -2,8 +2,9 @@
 
 In order to toonify real face images we leverage (modified) copies (no git submodules) of several existing repositories
 
-* https://github.com/justinpinkney/stylegan2 (commit `dbf69a9`) from Justin Pinkney
-* https://github.com/dvschultz/stylegan2-ada-pytorch (commit `9b6750b`) from Derrick Schultz
+* https://github.com/justinpinkney/stylegan2 (commit `dbf69a9`) by Justin Pinkney
+* https://github.com/dvschultz/stylegan2-ada-pytorch (commit `9b6750b`) by Derrick Schultz
+* https://github.com/eladrich/pixel2style2pixel (commit `334f45e`) by Elad Richardson
 
 and leverage several pre-trained models
 
@@ -11,7 +12,14 @@ and leverage several pre-trained models
 * https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/transfer-learning-source-nets/ffhq-res1024-mirror-stylegan2-noaug.pkl
 * https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/metrics/vgg16.pt
 
-## Setup
+## Table of Contents
+
+  * [Setup Environment](#setup-environment)
+  * [1. Data Preparation](#1-data-preparation)
+    + [Cartoon Face Alignment](#cartoon-face-alignment)
+
+
+## Setup Environment
 
     conda env create -f environment.yml
     conda activate toon
@@ -186,7 +194,7 @@ We got best results when using the **lower layers** from the **cartoon-faces** m
             --higher_res_pkl {ffhq_model} \
             --output_path {project}/blending/cartoon_ffhq_blended_128.pkl
 
-## 3. Projection of Input Images into the Latent Space
+## 3. Projection of Input Images into the Latent Space (aka StyleGAN Inversion)
 
 In order to toonify given input images from real faces, we need to project them to it's latent vector representation using a variational autoencoder (VAE).
 
