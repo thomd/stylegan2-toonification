@@ -279,3 +279,19 @@ In case of a different location or different folder names, update paths in `./pi
 ### Training pSp
 
 
+    %load_ext tensorboard
+    %tensorboard --logdir {project}/pixel2style2pixel
+
+    %cd /content/stylegan2-toonification/pixel2style2pixel
+
+    !python scripts/train.py \
+            --dataset_type='toonify' \
+            --exp_dir={project}/pixel2style2pixel \
+            --batch_size=4 \
+            --save_interval=1000 \
+            --start_from_latent_avg \
+            --lpips_lambda=0.8 \
+            --l2_lambda=1 \
+            --id_lambda=0.1 \
+            --w_norm_lambda=0.005
+
