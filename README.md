@@ -1,6 +1,6 @@
 # Toonification of Real Face Images
 
-In order to toonify real face images we leverage copies (no git submodules) of several **existing repositories**:
+In order to toonify real face images we leverage modified copies (no git submodules) of several **existing repositories**:
 
 * https://github.com/justinpinkney/stylegan2 (commit `dbf69a9`) by Justin Pinkney
 * https://github.com/dvschultz/stylegan2-ada-pytorch (commit `9b6750b`) by Derrick Schultz
@@ -249,7 +249,7 @@ dataset of **3000 images minimum**. If no dataset is available, use the **StyleG
 
 Prepare the image pairs using the following file structure:
 
-    dataset
+    dataset_psp
     ├── test
     │   ├── reals
     │   │   ├── 0001.png
@@ -264,6 +264,16 @@ Prepare the image pairs using the following file structure:
         └── toons
             ├── 0003.png
             └── 0004.png
+
+Then upload as zip file to Google Colab and unzip into `/content`:
+
+    > zip -r dataset_psp.zip dataset_psp
+    > gdrive upload -p <folderId> dataset_psp.zip
+
+    %cd /content
+    !unzip dataset_psp.zip
+
+In case of a different location or different folder names, update paths in `./pixel2style2pixel/configs/paths_config.py`.
 
 ### Training pSp
 
