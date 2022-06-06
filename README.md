@@ -274,23 +274,23 @@ Then upload as zip file to Google Colab and unzip into `/content`:
     > gdrive upload -p <folderId> dataset_psp.zip
 
     %cd /content
-    !mv {project}/dataset_psp.zip .
+    !cp {project}/dataset_psp.zip .
     !unzip -q dataset_psp.zip
 
 In case of a different location or different folder names, update paths in `./pixel2style2pixel/configs/paths_config.py`.
 
 ### Training pSp
 
-First, download the pretrained **IR-SE50 model** for ID loss during pSp training:
+First, download the pretrained **IR-SE50 model** for ID loss during pSp training and the pretrained **FFHQ StyleGAN model**:
 
-    %cd /content/stylegan2-toonification/pixel2style2pixel
-    !gdrive download 1KW7bjndL3QG3sxBbZxreGHigcCCpsDgn
+    %cd /content/stylegan2-toonification/pixel2style2pixel/pretrained_models
+    !gdown 1KW7bjndL3QG3sxBbZxreGHigcCCpsDgn
+    !gdown 1EM87UquaoQmk17Q8d5kYIAHqu0dkYqdT
 
     %load_ext tensorboard
     %tensorboard --logdir {project}/pixel2style2pixel
 
     %cd /content/stylegan2-toonification/pixel2style2pixel
-
     !python scripts/train.py \
             --dataset_type='toonify' \
             --exp_dir={project}/pixel2style2pixel \
