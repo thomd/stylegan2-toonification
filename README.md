@@ -28,14 +28,16 @@ and leverage several **pre-trained models**:
   * [3. Projection of Input Images into the Latent Space](#3-projection-of-input-images-into-the-latent-space)
   * [4. Image-to-Image Translation GAN](#4-image-to-image-translation-gan)
     + [Generation of an Image-Pair Dataset](#generation-of-an-image-pair-dataset)
-    + [Training pSp](#training-psp)
+    + [Train pSp Model](#train-psp-model)
+    + [Test pSp Model](#test-psp-model)
+  * [5. Run Streamlit Demo](#5-run-streamlit-demo)
 
 ## 1. Data Preparation
 
 We use a collection of about 1000 disney/pixar style cartoon face images which were collected using a web
 scraper and a custom web tool for image management and image cropping.
 
-Store cartoon face images in `./cartoon-images`.
+Store cartoon face images in a folder `./faces`.
 
 ### Setup Environment
 
@@ -45,7 +47,7 @@ Store cartoon face images in `./cartoon-images`.
 ### Cartoon Face Alignment
 
 As we are going to apply transfer-learning on the **FFHQ_1024 model**, we have to **resize** all images to 1024&times;1024 and **align** all 
-cartoon images to have similar face-keypoint positions as the face images from the [FFHQ dataset](https://github.com/NVlabs/ffhq-dataset) used to train the FFHQ model.
+cartoon images to have similar face-keypoint positions as the face images from the [Flickr Faces HQ dataset](https://github.com/NVlabs/ffhq-dataset) used to train the FFHQ model.
 
 In oder to find face-keypoints, we need to begin with detecting cartoon faces.
 
@@ -279,13 +281,15 @@ Then upload as zip file to Google Colab and unzip into `/content`:
 
 In case of a different location or different folder names, update paths in `./pixel2style2pixel/configs/paths_config.py`.
 
-### Training pSp
+### Train pSp Model
 
 First, download the pretrained **IR-SE50 model** for ID loss during pSp training and the pretrained **FFHQ StyleGAN model**:
 
     %cd /content/stylegan2-toonification/pixel2style2pixel/pretrained_models
     !gdown 1KW7bjndL3QG3sxBbZxreGHigcCCpsDgn
     !gdown 1EM87UquaoQmk17Q8d5kYIAHqu0dkYqdT
+
+Then train the cartoon model. We got best results with these hyper parameters:
 
     %load_ext tensorboard
     %tensorboard --logdir {project}/pixel2style2pixel
@@ -295,10 +299,29 @@ First, download the pretrained **IR-SE50 model** for ID loss during pSp training
             --dataset_type='toonify' \
             --exp_dir={project}/pixel2style2pixel \
             --batch_size=4 \
-            --save_interval=1000 \
             --start_from_latent_avg \
             --lpips_lambda=0.8 \
             --l2_lambda=1 \
-            --id_lambda=0.1 \
-            --w_norm_lambda=0.005
+            --id_lambda=1 \
+            --w_norm_lambda=0.025
+
+### Test pSp Model
+
+Having trained your model, apply it on a real aligned face image.
+
+    %cd /content/stylegan2-toonification
+    !python align_image_data.py --image-source=/content/psp/input/face.jpg
+
+    %cd /content/stylegan2-toonification/pixel2style2pixel
+
+    !python scripts/inference.py \
+            --exp_dir=/content/psp/output \
+            --checkpoint_path={project}/pixel2style2pixel/checkpoints/best_model.pt \
+            --data_path=/content/psp/input \
+            --couple_outputs \
+            --test_batch_size=1
+
+## Run Streamlit Demo
+
+
 
