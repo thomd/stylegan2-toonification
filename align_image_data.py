@@ -55,15 +55,16 @@ def align_images(args):
 
 
 def align_image(args):
-    source_image = str(args['image_source'])
-    print(f'\nAligning {source_image} using the {args["model"]} model: ', end='')
-    image = dlib.load_rgb_image(source_image)
+    breakpoint()
+    source_image = args['image_source']
+    print(f'\nAligning {str(source_image)} using the {args["model"]} model: ', end='')
+    image = dlib.load_rgb_image(str(source_image))
     faces = face_detector(image, 1)
     face = faces[0]
     rect = face if args['model'] == 'hog' else face.rect
     face_landmarks = [(item.x, item.y) for item in face_predictor(image, rect).parts()]
-    target_image = str(f'{Path(source_image).stem}_00.png')
-    image_align(source_image, target_image, face_landmarks, output_size=args['output_size'])
+    target_image = str(f'{source_image.parent / source_image.stem}_00.png')
+    image_align(str(source_image), str(target_image), face_landmarks, output_size=args['output_size'])
     print(target_image)
 
 
@@ -71,7 +72,7 @@ if __name__ == '__main__':
     class CustomFormatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter):
         pass
 
-    parser = argparse.ArgumentParser(description='Pre-process image data', formatter_class=CustomFormatter)
+    parser = argparse.ArgumentParser(description='Align face images using face-detection and face-landmarks', formatter_class=CustomFormatter)
     parser.add_argument('--images-source', default='faces', type=Path, metavar='PATH', help='path to source folder of face images')
     parser.add_argument('--image-source', type=Path, metavar='PATH', help='path to a single face image')
     parser.add_argument('--images-target', default='faces-aligned', type=Path, metavar='PATH', help='path to target folder for aligned face images')
