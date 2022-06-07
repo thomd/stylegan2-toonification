@@ -55,7 +55,6 @@ def align_images(args):
 
 
 def align_image(args):
-    breakpoint()
     source_image = args['image_source']
     print(f'\nAligning {str(source_image)} using the {args["model"]} model: ', end='')
     image = dlib.load_rgb_image(str(source_image))
