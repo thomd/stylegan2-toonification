@@ -1,6 +1,8 @@
-cartoon-images/
-cartoon-images-aligned/
+faces/
+faces-aligned/
 dataset/
 *.dat
 *.zip
 Untitled.ipynb
+/*.jpg
+/*.png

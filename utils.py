@@ -22,7 +22,7 @@ def remove_button(file_path):
     return button
 
 
-def print_images(source_folder='cartoon-images', target_folder='cartoon-images-aligned', image_filter='aligned', landmarks=False, size=512):
+def print_images(source_folder='faces', target_folder='faces-aligned', image_filter='aligned', landmarks=False, size=512):
 
     image_types = ['.jpg', '.jpeg', '.png', '.bmp', '.tif', '.tiff']
     source_images = [str(p) for p in Path(source_folder).glob('**/*.*') if p.suffix in image_types]

@@ -89,4 +89,7 @@ def image_align(src_file, dst_file, face_landmarks, output_size=1024, transform_
             img = img.resize((output_size, output_size), PIL.Image.ANTIALIAS)
 
         # Save aligned image.
-        img.save(dst_file, 'PNG')
+        if dst_file:
+            img.save(dst_file, 'PNG')
+        else:
+            return img

@@ -6,10 +6,10 @@ dataset_paths = {
 	'celeba_train_segmentation': '',
 	'celeba_test_segmentation': '',
 	'ffhq': '',
-	'real_train': '/content/dataset_psp/train/real',
-	'real_test': '/content/dataset_psp/test/real',
-	'toon_train': '/content/dataset_psp/train/toon',
-	'toon_test': '/content/dataset_psp/test/toon',
+	'real_train': '/content/dataset_psp/train/reals',
+	'real_test': '/content/dataset_psp/test/reals',
+	'toon_train': '/content/dataset_psp/train/toons',
+	'toon_test': '/content/dataset_psp/test/toons',
 }
 
 model_paths = {
