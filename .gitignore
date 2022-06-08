@@ -2,6 +2,8 @@ faces/
 faces-aligned/
 dataset/
 *.dat
+*.pt
+*.pth
 *.zip
 Untitled.ipynb
 /*.jpg

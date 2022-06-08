@@ -30,7 +30,6 @@ and leverage several **pre-trained models**:
     + [Generation of an Image-Pair Dataset](#generation-of-an-image-pair-dataset)
     + [Train pSp Model](#train-psp-model)
     + [Test pSp Model](#test-psp-model)
-  * [5. Run Streamlit Demo](#5-run-streamlit-demo)
 
 ## 1. Data Preparation
 
@@ -320,8 +319,4 @@ Having trained your model, apply it on a real aligned face image.
             --data_path=/content/psp/input \
             --couple_outputs \
             --test_batch_size=1
-
-## Run Streamlit Demo
-
-
 
