@@ -22,13 +22,15 @@ def remove_button(file_path):
     return button
 
 
-def print_images(source_folder='faces', target_folder='faces-aligned', image_filter='aligned', landmarks=False, size=512):
-
+def print_images(source_folder='faces', target_folder='faces-aligned', image_filter='aligned', landmarks=False, size=512, **kwargs):
     image_types = ['.jpg', '.jpeg', '.png', '.bmp', '.tif', '.tiff']
     source_images = [str(p) for p in Path(source_folder).glob('**/*.*') if p.suffix in image_types]
+    if 'image_count' in kwargs:
+        source_images = source_images[:kwargs['image_count']]
 
     for i, image_path in enumerate(source_images):
         image = dlib.load_rgb_image(image_path)
+
         if landmarks:
             landmarks_file = Path(target_folder + '/' + str(Path(image_path).stem) + '_00.pkl')
             if landmarks_file.exists():
@@ -63,4 +65,3 @@ def print_images(source_folder='faces', target_folder='faces-aligned', image_fil
         if image_filter == 'missed' and not aligned_image.exists():
             print(f'\n{i}: {image_path}:')
             display(Image.fromarray(img1))
-
